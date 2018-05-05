@@ -42,21 +42,3 @@ defmodule KekkaiGateway.Endpoint do
 
   match _, to: KekkaiGateway.Endpoint.NotFound
 end
-
-defmodule KekkaiGateway.Parsers.ID do
-  defmodule ParseError do
-    defexception [
-      message: "The URL format is wrong.",
-      plug_status: 422,
-    ]
-  end
-
-  def parse!(id) when is_binary(id) do
-    id
-    |> Integer.parse()
-    |> judge_parse!()
-  end
-
-  defp judge_parse!({id, ""}), do: id
-  defp judge_parse!(_), do: raise ParseError
-end
