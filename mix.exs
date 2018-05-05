@@ -16,7 +16,7 @@ defmodule Kekkai.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:distillery, "~> 1.0.0", warn_missing: false, runtime: false},
+      {:distillery, "~> 1.0", warn_missing: false, runtime: false},
     ]
   end
 end
