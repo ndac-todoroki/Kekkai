@@ -17,4 +17,6 @@ defmodule KekkaiCore do
   def crc_test(conn, id) do
     conn |> KekkaiCore.Server.crc_test(id)
   end
+
+  def instance_info(conn, id), do: conn |> KekkaiCore.Server.instance_info(id)
 end

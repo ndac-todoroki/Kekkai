@@ -19,4 +19,10 @@ defmodule KekkaiCore.Server.Instance.Settings do
   defstruct @struct_keys
 
   def permitted_keys, do: @struct_keys
+
+  def webhook_url(%__MODULE__{} = settings) do
+    # FIXME: move this to config
+    base = "https://www.jinro.club"
+    "#{base}/webhooks/#{settings.instance_id}/#{settings.noise}"
+  end
 end

@@ -64,6 +64,23 @@ defmodule KekkaiCore.Server.Instance.Worker do
   end
 
   @impl GenServer
+  def handle_call({:instance_info, conn}, _from, %Settings{} = state) do
+    json =
+      %{
+        id: state.instance_id,
+        webhook_url: state |> Settings.webhook_url(),
+      }
+      |> Jason.encode!()
+
+    conn =
+      conn
+      |> set_body(json)
+      |> send_resp()
+
+    {:reply, conn, state}
+  end
+
+  @impl GenServer
   def handle_info({:do_reply, conn, from}, %{instance_id: instance_id} = state) do
     new_conn =
       conn
@@ -72,5 +89,12 @@ defmodule KekkaiCore.Server.Instance.Worker do
 
     GenServer.reply(from, {:done, new_conn})
     {:noreply, state}
+  end
+
+
+  #### private functions
+
+  defp set_body(%Plug.Conn{resp_body: nil, state: :unset} = conn, body) do
+    %{conn | resp_body: body, state: :set}
   end
 end

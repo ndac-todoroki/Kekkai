@@ -27,6 +27,16 @@ defmodule KekkaiCore.Server.Instance.API do
     |> GenServer.call({:crc_test, conn})
   end
 
+  @spec instance_info(GenServer.server, Plug.Conn.t) :: Plug.Conn.t
+  @doc """
+  Quotes with the webhook endpoint url json.
+  """
+  def instance_info(process, conn) do
+    process
+    |> verify_process!()
+    |> GenServer.call({:instance_info, conn})
+  end
+
 
   #### private functions
 

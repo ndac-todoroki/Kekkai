@@ -53,4 +53,10 @@ defmodule KekkaiCore.Server do
     |> KekkaiCore.Application.process_name()
     |> KekkaiCore.Server.Instance.API.crc_test(conn)
   end
+
+  def instance_info(conn, id) do
+    id
+    |> KekkaiCore.Application.process_name()
+    |> KekkaiCore.Server.Instance.API.instance_info(conn)
+  end
 end

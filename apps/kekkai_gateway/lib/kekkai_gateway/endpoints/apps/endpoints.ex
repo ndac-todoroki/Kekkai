@@ -18,7 +18,9 @@ defmodule KekkaiGateway.Endpoint.Apps do
     with \
       {:ok, _pid} <- KekkaiCore.create_server_instance(params)
     do
-      send_resp(conn, 201, "#{params.id} was created")
+      conn
+      |> put_status(201)
+      |> KekkaiCore.instance_info(params.id)
     else
       {:error, :max_children} ->
         send_resp(conn, 500, "No more instances could be created. Please report this to us. Thanks.")
