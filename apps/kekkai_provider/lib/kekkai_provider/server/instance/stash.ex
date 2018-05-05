@@ -9,9 +9,11 @@ defmodule KekkaiProvider.Server.Instance.Stash do
     GenServer.start_link(__MODULE__, init_struct(opts))
   end
 
-  defp init_struct([instance_id: id, process_name: name]) do
+  defp init_struct([opts: %{id: id, consumer_secret: consumer_secret}, process_name: name]) do
     %Settings{
       instance_id: id,
+      consumer_secret: consumer_secret,
+      noise: SecureRandom.urlsafe_base64(),
       process_name: name,
     }
   end

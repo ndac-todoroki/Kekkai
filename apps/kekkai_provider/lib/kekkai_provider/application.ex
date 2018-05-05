@@ -24,4 +24,5 @@ defmodule KekkaiProvider.Application do
   Returns in a `:via` tuple style.
   """
   def process_name(id) when id |> is_integer, do: {:via, Registry, {@registry, id}}
+  def process_name(id), do: raise ArgumentError, message: "id must be an integer. given: #{id}"
 end

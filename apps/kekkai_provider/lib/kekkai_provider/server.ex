@@ -32,9 +32,9 @@ defmodule KekkaiProvider.Server do
     )
   end
 
-  def start_child(id) do
+  def start_child(%{id: id} = opts) do
     process_name = KekkaiProvider.Application.process_name(id)
-    spec = {KekkaiProvider.Server.Instance, instance_id: id, process_name: process_name}
+    spec = {KekkaiProvider.Server.Instance, process_name: process_name, opts: opts}
 
     case DynamicSupervisor.start_child(__MODULE__, spec) do
       {:ok, pid} ->

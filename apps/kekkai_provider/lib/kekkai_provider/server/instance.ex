@@ -10,13 +10,13 @@ defmodule KekkaiProvider.Server.Instance do
 
   alias __MODULE__.Worker, as: InstanceWorker
 
-  def start_link(_something, opts) do
+  def start_link(_something, options \\ []) do
     with \
-      {:ok, id} <- opts |> Keyword.fetch(:instance_id),
-      {:ok, name} <- opts |> Keyword.fetch(:process_name),
-      {:ok, sup} <- Supervisor.start_link(__MODULE__, [instance_id: id])
+      {:ok, name} <- options |> Keyword.fetch(:process_name),
+      {:ok, opts} <- options |> Keyword.fetch(:opts),
+      {:ok, sup} <- Supervisor.start_link(__MODULE__, [])
     do
-      start_tree(sup, id, name)
+      start_tree(sup, name, opts)
     else
       :error ->
         {:error, "instance id or process name not given"}
@@ -25,9 +25,9 @@ defmodule KekkaiProvider.Server.Instance do
     end
   end
 
-  def start_tree(sup, id, name) do
+  def start_tree(sup, name, opts) do
     with \
-      {:ok, stash} <- Supervisor.start_child(sup, {__MODULE__.Stash, [instance_id: id, process_name: name]}),
+      {:ok, stash} <- Supervisor.start_child(sup, {__MODULE__.Stash, [opts: opts, process_name: name]}),
       {:ok, _worker} <- Supervisor.start_child(sup, {__MODULE__.WorkerSupervisor, [stash: stash]})
     do
       {:ok, sup}
