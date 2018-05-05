@@ -1,5 +1,5 @@
 defmodule KekkaiProvider.Server.Instance.Worker do
-  use GenServer, restart: :temporary
+  use GenServer, restart: :permanent
   alias KekkaiProvider.Server.Instance.{Settings, Stash}
 
   def start_link(stash_pid) do
