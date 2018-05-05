@@ -25,16 +25,7 @@ defmodule KekkaiGateway.Endpoint do
 
   forward "/apps", to: KekkaiGateway.Endpoint.Apps
 
-  post "/webhooks/:id/:noise" do
-    id = id |> KekkaiGateway.Parsers.ID.parse!()
-
-  end
-
-  # Twitter's CRC test endpoint
-  post "/webhooks/:id/:noise/:crc_token" do
-    id = id |> KekkaiGateway.Parsers.ID.parse!()
-    KekkaiCore.crc_test(conn, id)
-  end
+  forward "/webhooks", to: KekkaiGateway.Endpoint.Webhooks
 
   match "/" do
     send_resp(conn, 200, "hello world")
