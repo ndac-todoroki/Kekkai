@@ -34,7 +34,7 @@ release :kekkai do
   set version: "0.1.0"
   set applications: [
     kekkai_core: :permanent,
-    kekkai_server: :permanent
+    kekkai_gateway: :permanent
   ]
 end
 

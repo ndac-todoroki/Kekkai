@@ -1,9 +1,9 @@
-defmodule KekkaiServer.MixProject do
+defmodule KekkaiGateway.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kekkai_server,
+      app: :kekkai_gateway,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -19,7 +19,7 @@ defmodule KekkaiServer.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {KekkaiServer.Application, []}
+      mod: {KekkaiGateway.Application, []}
     ]
   end
 

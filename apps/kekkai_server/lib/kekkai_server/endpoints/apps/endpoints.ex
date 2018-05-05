@@ -1,4 +1,4 @@
-defmodule KekkaiServer.Endpoint.Apps do
+defmodule KekkaiGateway.Endpoint.Apps do
   use Plug.Router
   use Plug.ErrorHandler
   require Logger
@@ -28,11 +28,11 @@ defmodule KekkaiServer.Endpoint.Apps do
   end
 
   get "/:id" do
-    id = id |> KekkaiServer.Parsers.ID.parse!()
+    id = id |> KekkaiGateway.Parsers.ID.parse!()
     conn |> KekkaiCore.hello(id)
   end
 
-  match _, to: KekkaiServer.Endpoint.NotFound
+  match _, to: KekkaiGateway.Endpoint.NotFound
 
   def handle_errors(conn, %{kind: :error, reason: %SimpleSchema.FromJsonError{} = reason, stack: _stack}) do
     json =

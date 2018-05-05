@@ -1,4 +1,4 @@
-defmodule KekkaiServer.Endpoint do
+defmodule KekkaiGateway.Endpoint do
   @moduledoc """
   The root endpoint for the Kekkai Server application.
   """
@@ -23,16 +23,16 @@ defmodule KekkaiServer.Endpoint do
     Logger.info("* Cowboy started on port #{port}")
   end
 
-  forward "/apps", to: KekkaiServer.Endpoint.Apps
+  forward "/apps", to: KekkaiGateway.Endpoint.Apps
 
   post "/webhooks/:id/:noise" do
-    id = id |> KekkaiServer.Parsers.ID.parse!()
+    id = id |> KekkaiGateway.Parsers.ID.parse!()
 
   end
 
   # Twitter's CRC test endpoint
   post "/webhooks/:id/:noise/:crc_token" do
-    id = id |> KekkaiServer.Parsers.ID.parse!()
+    id = id |> KekkaiGateway.Parsers.ID.parse!()
     KekkaiCore.crc_test(conn, id)
   end
 
@@ -40,10 +40,10 @@ defmodule KekkaiServer.Endpoint do
     send_resp(conn, 200, "hello world")
   end
 
-  match _, to: KekkaiServer.Endpoint.NotFound
+  match _, to: KekkaiGateway.Endpoint.NotFound
 end
 
-defmodule KekkaiServer.Parsers.ID do
+defmodule KekkaiGateway.Parsers.ID do
   defmodule ParseError do
     defexception [
       message: "The URL format is wrong.",

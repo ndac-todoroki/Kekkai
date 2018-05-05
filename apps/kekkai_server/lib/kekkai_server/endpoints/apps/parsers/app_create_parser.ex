@@ -1,4 +1,4 @@
-defmodule KekkaiServer.Endpoint.Apps.CreateParser do
+defmodule KekkaiGateway.Endpoint.Apps.CreateParser do
   defmodule AttributesSchema do
     import SimpleSchema, only: [defschema: 2]
 

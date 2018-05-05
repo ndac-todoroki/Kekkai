@@ -1,4 +1,4 @@
-defmodule KekkaiServer.Endpoint.NotFound do
+defmodule KekkaiGateway.Endpoint.NotFound do
   use Plug.Router
   use Plug.ErrorHandler
 

@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :kekkai_server, key: :value
+#     config :kekkai_gateway, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:kekkai_server, :key)
+#     Application.get_env(:kekkai_gateway, :key)
 #
 # You can also configure a 3rd-party app:
 #

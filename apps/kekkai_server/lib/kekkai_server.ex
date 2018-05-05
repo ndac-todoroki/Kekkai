@@ -1,6 +1,6 @@
-defmodule KekkaiServer do
+defmodule KekkaiGateway do
   @moduledoc """
-  Documentation for KekkaiServer.
+  Documentation for KekkaiGateway.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule KekkaiServer do
 
   ## Examples
 
-      iex> KekkaiServer.hello
+      iex> KekkaiGateway.hello
       :world
 
   """
