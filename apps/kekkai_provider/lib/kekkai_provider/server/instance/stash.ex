@@ -1,5 +1,5 @@
-defmodule KekkaiProvider.Server.Instance.Stash do
-  alias KekkaiProvider.Server.Instance.Settings
+defmodule KekkaiCore.Server.Instance.Stash do
+  alias KekkaiCore.Server.Instance.Settings
 
   use GenServer
 

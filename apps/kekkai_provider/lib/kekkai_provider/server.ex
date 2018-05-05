@@ -1,9 +1,9 @@
-defmodule KekkaiProvider.Server do
+defmodule KekkaiCore.Server do
   @moduledoc """
-  The KekkaiProvider server is a cluster of multiple server instances.
-  This `KekkaiProvider.Server` itself is a `DynamicSupervisor` which creates
-  multiple KekkaiProvider server instances and keeps track of it.
-  Names of the server instances are taken from `KekkaiProvider.Registry` using `:via` tuples.
+  The KekkaiCore server is a cluster of multiple server instances.
+  This `KekkaiCore.Server` itself is a `DynamicSupervisor` which creates
+  multiple KekkaiCore server instances and keeps track of it.
+  Names of the server instances are taken from `KekkaiCore.Registry` using `:via` tuples.
   """
 
   use DynamicSupervisor#, restart: :temporary  # children wouldn't be restarted automatically
@@ -13,9 +13,9 @@ defmodule KekkaiProvider.Server do
   end
 
   def reply(conn, id) do
-    process_name = KekkaiProvider.Application.process_name(id)
+    process_name = KekkaiCore.Application.process_name(id)
 
-    with {:done, new_conn} <- KekkaiProvider.Server.Instance.reply(process_name, conn) do
+    with {:done, new_conn} <- KekkaiCore.Server.Instance.reply(process_name, conn) do
       new_conn
     else
       any ->
@@ -33,8 +33,8 @@ defmodule KekkaiProvider.Server do
   end
 
   def start_child(%{id: id} = opts) do
-    process_name = KekkaiProvider.Application.process_name(id)
-    spec = {KekkaiProvider.Server.Instance, process_name: process_name, opts: opts}
+    process_name = KekkaiCore.Application.process_name(id)
+    spec = {KekkaiCore.Server.Instance, process_name: process_name, opts: opts}
 
     case DynamicSupervisor.start_child(__MODULE__, spec) do
       {:ok, pid} ->
@@ -46,5 +46,11 @@ defmodule KekkaiProvider.Server do
       others ->
         others
     end
+  end
+
+  def crc_test(conn, id) do
+    id
+    |> KekkaiCore.Application.process_name()
+    |> KekkaiCore.Server.Instance.Worker.crc_test(conn)
   end
 end

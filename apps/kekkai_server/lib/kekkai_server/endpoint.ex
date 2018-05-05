@@ -33,7 +33,7 @@ defmodule KekkaiServer.Endpoint do
   # Twitter's CRC test endpoint
   post "/webhooks/:id/:noise/:crc_token" do
     id = id |> KekkaiServer.Parsers.ID.parse!()
-
+    KekkaiCore.crc_test(conn, id)
   end
 
   match "/" do

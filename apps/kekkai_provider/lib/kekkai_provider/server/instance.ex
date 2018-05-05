@@ -1,4 +1,4 @@
-defmodule KekkaiProvider.Server.Instance do
+defmodule KekkaiCore.Server.Instance do
   @moduledoc """
   The `Supervisor` which supervises one `Worker` and one `Stash`.
   This module also does user-specific jobs.
@@ -34,10 +34,10 @@ defmodule KekkaiProvider.Server.Instance do
     else
       # FIXME: これなんとかしたい
       {:error, {
-        {:shutdown, {:failed_to_start_child, KekkaiProvider.Server.Instance.Worker, {:already_started, pid}}},
-        {:child, :undefined, KekkaiProvider.Server.Instance.WorkerSupervisor,
-            {KekkaiProvider.Server.Instance.WorkerSupervisor, :start_link, [[stash: _stash_pid]]},
-            :permanent, :infinity, :supervisor, [KekkaiProvider.Server.Instance.WorkerSupervisor]}
+        {:shutdown, {:failed_to_start_child, KekkaiCore.Server.Instance.Worker, {:already_started, pid}}},
+        {:child, :undefined, KekkaiCore.Server.Instance.WorkerSupervisor,
+            {KekkaiCore.Server.Instance.WorkerSupervisor, :start_link, [[stash: _stash_pid]]},
+            :permanent, :infinity, :supervisor, [KekkaiCore.Server.Instance.WorkerSupervisor]}
       }} ->
         Process.exit(sup, :kill)
         {:error, {:already_started, pid}}

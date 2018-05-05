@@ -1,6 +1,10 @@
-defmodule KekkaiProvider.Server.Instance.Worker do
+defmodule KekkaiCore.Server.Instance.Worker do
   use GenServer, restart: :permanent
-  alias KekkaiProvider.Server.Instance.{Settings, Stash}
+
+  alias KekkaiCore.Server.Instance.{Settings, Stash}
+  alias KekkaiCore.Server.Instance.Worker.{CrcTestParser}
+
+  import Plug.Conn
 
   def start_link(stash_pid) do
     with \
@@ -19,6 +23,12 @@ defmodule KekkaiProvider.Server.Instance.Worker do
     process
     |> verify_process!()
     |> GenServer.call({:reply_lazy, conn})
+  end
+
+  def crc_test(process, conn) do
+    process
+    |> verify_process!()
+    |> GenServer.call({:crc_test, conn})
   end
 
   defp verify_process!({:via, Registry, {module, name}}) do
@@ -59,6 +69,27 @@ defmodule KekkaiProvider.Server.Instance.Worker do
   def handle_call({:reply_lazy, conn}, from, state) do
     Process.send_after(self(), {:do_reply, conn, from}, 0)
     {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_call({:crc_test, %Plug.Conn{} = conn}, _from, %Settings{} = state) do
+    params = conn.params |> CrcTestParser.parse!
+    key = state.consumer_secret || raise "consumer_secret not set"
+    message = params.crc_token
+
+    response_token =
+      :crypto.hmac(:sha256, key, message)
+      |> Base.encode64(padding: true)
+
+    json =
+      %{response_token: response_token}
+      |> Jason.encode!()
+
+    new_conn =
+      conn
+      |> send_resp(200, json)
+
+    {:reply, new_conn, state}
   end
 
   @impl GenServer

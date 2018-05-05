@@ -33,7 +33,7 @@ end
 release :kekkai do
   set version: "0.1.0"
   set applications: [
-    kekkai_provider: :permanent,
+    kekkai_core: :permanent,
     kekkai_server: :permanent
   ]
 end

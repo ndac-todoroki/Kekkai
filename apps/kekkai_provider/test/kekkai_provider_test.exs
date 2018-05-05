@@ -1,8 +1,8 @@
-defmodule KekkaiProviderTest do
+defmodule KekkaiCoreTest do
   use ExUnit.Case
-  doctest KekkaiProvider
+  doctest KekkaiCore
 
   test "greets the world" do
-    assert KekkaiProvider.hello() == :world
+    assert KekkaiCore.hello() == :world
   end
 end

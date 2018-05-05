@@ -1,21 +1,21 @@
-defmodule KekkaiProvider.Application do
+defmodule KekkaiCore.Application do
   @moduledoc """
-  Top level `Supervisor` for KekkaiProvider.
+  Top level `Supervisor` for KekkaiCore.
   This module supervises the server cluster and the pid Registry,
   and also provides functions for them.
   """
 
   use Application
 
-  @registry KekkaiProvider.Registry
+  @registry KekkaiCore.Registry
 
   def start(_type, _args) do
     children = [
       {Registry, keys: :unique, name: @registry},
-      {KekkaiProvider.Server, []}
+      {KekkaiCore.Server, []}
     ]
 
-    opts = [strategy: :one_for_one, name: KekkaiProvider.Supervisor]
+    opts = [strategy: :one_for_one, name: KekkaiCore.Supervisor]
     Supervisor.start_link(children, opts)
   end
 

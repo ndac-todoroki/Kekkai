@@ -1,4 +1,4 @@
-defmodule KekkaiProvider.Server.Instance.Settings do
+defmodule KekkaiCore.Server.Instance.Settings do
   @moduledoc """
   Struct representing Kekkai instance settings.
 

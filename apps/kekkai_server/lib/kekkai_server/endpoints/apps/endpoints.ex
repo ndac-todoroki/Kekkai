@@ -16,7 +16,7 @@ defmodule KekkaiServer.Endpoint.Apps do
     params = conn.body_params |> Apps.CreateParser.parse!()
 
     with \
-      {:ok, _pid} <- KekkaiProvider.create_server_instance(params)
+      {:ok, _pid} <- KekkaiCore.create_server_instance(params)
     do
       send_resp(conn, 201, "#{params.id} was created")
     else
@@ -29,8 +29,7 @@ defmodule KekkaiServer.Endpoint.Apps do
 
   get "/:id" do
     id = id |> KekkaiServer.Parsers.ID.parse!()
-    params = conn.body_params
-    conn |> KekkaiProvider.hello(id)
+    conn |> KekkaiCore.hello(id)
   end
 
   match _, to: KekkaiServer.Endpoint.NotFound

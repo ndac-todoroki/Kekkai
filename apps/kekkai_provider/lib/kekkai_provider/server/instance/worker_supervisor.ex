@@ -1,5 +1,5 @@
-defmodule KekkaiProvider.Server.Instance.WorkerSupervisor do
-  alias KekkaiProvider.Server.Instance.Worker, as: Worker
+defmodule KekkaiCore.Server.Instance.WorkerSupervisor do
+  alias KekkaiCore.Server.Instance.Worker, as: Worker
 
   use Supervisor
   require Logger

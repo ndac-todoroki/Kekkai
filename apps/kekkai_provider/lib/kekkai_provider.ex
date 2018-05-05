@@ -1,13 +1,17 @@
-defmodule KekkaiProvider do
+defmodule KekkaiCore do
   @moduledoc """
-  Documentation for KekkaiProvider.
+  Documentation for KekkaiCore.
   """
 
   def create_server_instance(opts)do
-    KekkaiProvider.Server.start_child(opts)
+    KekkaiCore.Server.start_child(opts)
   end
 
   def hello(conn, id) when id |> is_integer() do
-    conn |> KekkaiProvider.Server.reply(id)
+    conn |> KekkaiCore.Server.reply(id)
+  end
+
+  def crc_test(conn, id) do
+    conn |> KekkaiCore.Server.crc_test(id)
   end
 end
