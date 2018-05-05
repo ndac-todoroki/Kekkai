@@ -7,7 +7,7 @@ defmodule KekkaiCore.Server.Instance.API do
 
   #### Public APIs
 
-  @spec reply(GenServer.name, Plug.Conn.t) :: Plug.Conn.t
+  @spec reply(GenServer.server, Plug.Conn.t) :: Plug.Conn.t
   @doc """
   Performs a hello world from the given instance.
   """
@@ -17,7 +17,7 @@ defmodule KekkaiCore.Server.Instance.API do
     |> GenServer.call({:reply_lazy, conn})
   end
 
-  @spec crc_test(GenServer.name, Plug.Conn.t) :: Plug.Conn.t
+  @spec crc_test(GenServer.server, Plug.Conn.t) :: Plug.Conn.t
   @doc """
   Performs a CRC test required by Twitter's AAA Api.
   """
@@ -30,6 +30,8 @@ defmodule KekkaiCore.Server.Instance.API do
 
   #### private functions
 
+  @spec verify_process!(GenServer.server) :: GenServer.server | no_return
+  # verifies if process is alive or not, and returns the process on success.
   defp verify_process!({:via, Registry, {module, name}}) do
     case Registry.lookup(module, name) do
       [] ->
