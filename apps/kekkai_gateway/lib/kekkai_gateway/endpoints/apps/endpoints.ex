@@ -31,7 +31,9 @@ defmodule KekkaiGateway.Endpoint.Apps do
 
   get "/:id" do
     id = id |> KekkaiGateway.Parsers.ID.parse!()
-    conn |> KekkaiCore.hello(id)
+    conn
+    |> put_status(200)
+    |> KekkaiCore.instance_info(id)
   end
 
   match _, to: KekkaiGateway.Endpoint.NotFound
