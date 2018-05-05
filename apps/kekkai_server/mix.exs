@@ -29,6 +29,9 @@ defmodule KekkaiServer.MixProject do
       {:cowboy, "~> 2.3"},
       {:plug, "~> 1.3"},
       {:jason, "~> 1.0"},
+
+      # Verify JSON
+      {:simple_schema, git: "https://github.com/ndac-todoroki/simple_schema/", branch: "unique_exception"},
     ]
   end
 end

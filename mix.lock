@@ -1,8 +1,13 @@
 %{
   "cowboy": {:hex, :cowboy, "2.4.0", "f1b72fabe9c8a5fc64ac5ac85fb65474d64733d1df52a26fad5d4ba3d9f70a9f", [:rebar3], [{:cowlib, "~> 2.3.0", [hex: :cowlib, repo: "hexpm", optional: false]}, {:ranch, "~> 1.5.0", [hex: :ranch, repo: "hexpm", optional: false]}], "hexpm"},
   "cowlib": {:hex, :cowlib, "2.3.0", "bbd58ef537904e4f7c1dd62e6aa8bc831c8183ce4efa9bd1150164fe15be4caa", [:rebar3], [], "hexpm"},
+  "distillery": {:hex, :distillery, "1.0.0", "a866a72bf2a3a5f078f5a249017ed951acda88a760d200512f91f585d74db1ec", [:mix], [], "hexpm"},
+  "ex_json_schema": {:hex, :ex_json_schema, "0.5.7", "14a1bcd716e432badb19e5f54fd0f3f0be47b34d1b5957944702be90d66a6cf6", [:mix], [], "hexpm"},
   "jason": {:hex, :jason, "1.0.0", "0f7cfa9bdb23fed721ec05419bcee2b2c21a77e926bce0deda029b5adc716fe2", [:mix], [{:decimal, "~> 1.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm"},
+  "memoize": {:hex, :memoize, "1.2.7", "fd435d76496717561dc14af9135def1a9d5cab400939bf2b784764fabafe1655", [:mix], [], "hexpm"},
   "mime": {:hex, :mime, "1.2.0", "78adaa84832b3680de06f88f0997e3ead3b451a440d183d688085be2d709b534", [:mix], [], "hexpm"},
   "plug": {:hex, :plug, "1.5.0", "224b25b4039bedc1eac149fb52ed456770b9678bbf0349cdd810460e1e09195b", [:mix], [{:cowboy, "~> 1.0.1 or ~> 1.1 or ~> 2.1", [hex: :cowboy, repo: "hexpm", optional: true]}, {:mime, "~> 1.0", [hex: :mime, repo: "hexpm", optional: false]}], "hexpm"},
   "ranch": {:hex, :ranch, "1.5.0", "f04166f456790fee2ac1aa05a02745cc75783c2bfb26d39faf6aefc9a3d3a58a", [:rebar3], [], "hexpm"},
+  "secure_random": {:hex, :secure_random, "0.5.1", "c5532b37c89d175c328f5196a0c2a5680b15ebce3e654da37129a9fe40ebf51b", [:mix], [], "hexpm"},
+  "simple_schema": {:git, "https://github.com/ndac-todoroki/simple_schema/", "dfd23bf4d17ae42491850b278fcb8daf81b6b3f2", [branch: "unique_exception"]},
 }

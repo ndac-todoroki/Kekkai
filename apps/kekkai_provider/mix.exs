@@ -32,6 +32,7 @@ defmodule KekkaiProvider.MixProject do
       {:cowboy, "~> 2.3"},
       {:plug, "~> 1.3"},
       {:jason, "~> 1.0"},
+      {:secure_random, "~> 0.5"},
     ]
   end
 end
