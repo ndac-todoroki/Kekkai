@@ -1,9 +1,9 @@
-defmodule KekkaiCore.MixProject do
+defmodule CustomSimpleSchema.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kekkai_core,
+      app: :custom_simple_schema,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -18,22 +18,15 @@ defmodule KekkaiCore.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {KekkaiCore.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:cowboy, "~> 2.3"},
-      {:plug, "~> 1.3"},
-      {:jason, "~> 1.0"},
-      {:secure_random, "~> 0.5"},
-
-      # Verify JSON
       {:simple_schema, git: "https://github.com/ndac-todoroki/simple_schema/", branch: "unique_exception"},
-      {:custom_simple_schema, in_umbrella: true},
+      {:uuid, "~> 1.1"},
     ]
   end
 end

@@ -3,8 +3,7 @@ defmodule KekkaiCore.Server.Instance.Worker.CrcTestParser do
     import SimpleSchema, only: [defschema: 2]
 
     defschema [
-      id: :integer,
-      secret: :string,
+      id: SimpleSchema.Type.IntegerString,
       crc_token: :string,
     ], tolerant: true
   end
