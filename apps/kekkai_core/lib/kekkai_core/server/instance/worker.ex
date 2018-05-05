@@ -8,9 +8,9 @@ defmodule KekkaiCore.Server.Instance.Worker do
 
   def start_link(stash_pid) do
     with \
-      %Settings{instance_id: id, process_name: name} <- Stash.get_state(stash_pid)
+      %Settings{process_name: name} = settings <- Stash.get_state(stash_pid)
     do
-      GenServer.start_link(__MODULE__, id, name: name)
+      GenServer.start_link(__MODULE__, settings, name: name)
     else
       :error ->
         {:error, "instance id or process name not given"}
@@ -50,13 +50,12 @@ defmodule KekkaiCore.Server.Instance.Worker do
   #### GenServer implementations
 
   @impl GenServer
-  def init(instance_id) do
-    state = %{instance_id: instance_id}
-    {:ok, state}
+  def init(%Settings{} = settings) do
+    {:ok, settings}
   end
 
   @impl GenServer
-  def handle_call({:reply, conn}, _from, %{instance_id: instance_id} = state) do
+  def handle_call({:reply, conn}, _from, %Settings{instance_id: instance_id} = state) do
     new_conn =
       conn
       |> Plug.Conn.put_resp_header("X-From", instance_id)
