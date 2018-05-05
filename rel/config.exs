@@ -31,7 +31,7 @@ end
 # will be used by default
 
 release :kekkai do
-  set version: "0.1.0"
+  set version: "0.2.0"
   set applications: [
     kekkai_core: :permanent,
     kekkai_gateway: :permanent
