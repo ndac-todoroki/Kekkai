@@ -8,8 +8,6 @@ defmodule KekkaiCore.Server.Instance do
   """
   use Supervisor
 
-  alias __MODULE__.Worker, as: InstanceWorker
-
   def start_link(_something, options \\ []) do
     with \
       {:ok, name} <- options |> Keyword.fetch(:process_name),
@@ -44,7 +42,7 @@ defmodule KekkaiCore.Server.Instance do
     end
   end
 
-  def reply(process, conn), do: process |> InstanceWorker.reply(conn)
+  def reply(process, conn), do: process |> KekkaiCore.Server.Instance.API.reply(conn)
 
   def init(_) do
     Supervisor.init([], strategy: :rest_for_one)

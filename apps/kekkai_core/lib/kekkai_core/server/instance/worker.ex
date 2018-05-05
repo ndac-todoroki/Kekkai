@@ -19,34 +19,6 @@ defmodule KekkaiCore.Server.Instance.Worker do
     end
   end
 
-  def reply(process, conn) do
-    process
-    |> verify_process!()
-    |> GenServer.call({:reply_lazy, conn})
-  end
-
-  def crc_test(process, conn) do
-    process
-    |> verify_process!()
-    |> GenServer.call({:crc_test, conn})
-  end
-
-  defp verify_process!({:via, Registry, {module, name}}) do
-    case Registry.lookup(module, name) do
-      [] ->
-        raise "There's no process currently associated with the given name!"
-      [{pid, _}] ->
-        verify_process!(pid)
-    end
-  end
-  defp verify_process!(pid) when pid |> is_pid() do
-    if Process.alive?(pid) do
-      pid
-    else
-      raise "Pid not alive!"
-    end
-  end
-
   #### GenServer implementations
 
   @impl GenServer

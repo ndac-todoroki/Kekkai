@@ -51,6 +51,6 @@ defmodule KekkaiCore.Server do
   def crc_test(conn, id) do
     id
     |> KekkaiCore.Application.process_name()
-    |> KekkaiCore.Server.Instance.Worker.crc_test(conn)
+    |> KekkaiCore.Server.Instance.API.crc_test(conn)
   end
 end
