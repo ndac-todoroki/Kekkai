@@ -8,6 +8,14 @@ defmodule KekkaiServer.Endpoint do
   require Logger
 
   plug Plug.Logger
+
+  # set default to json
+  plug Plug.DefaultRespContentType, "application/json"
+
+  plug Plug.Parsers,
+          parsers: [:urlencoded, :json],
+          pass:  ["text/*"],
+          json_decoder: Jason
   plug :match
   plug :dispatch
 
@@ -15,29 +23,25 @@ defmodule KekkaiServer.Endpoint do
     Logger.info("* Cowboy started on port #{port}")
   end
 
-  post "/slave/:id" do
-    id = id |> KekkaiServer.Parsers.ID.parse!()
+  forward "/apps", to: KekkaiServer.Endpoint.Apps
 
-    with \
-      {:ok, _pid} <- KekkaiProvider.create_server_instance(id)
-    do
-      send_resp(conn, 201, "#{id} was created")
-    else
-      {:error, :max_children} ->
-        send_resp(conn, 500, "No more instances could be created. Please report this to us. Thanks.")
-      {:error, {:already_started, _pid}} ->
-        send_resp(conn, 409, "The instance with that name is already UP! Make sure your request is correct.")
-    end
-  end
+  # post "/webhooks/:id" do
+  #   id = id |> KekkaiServer.Parsers.ID.parse!()
 
-  get "/slave/:id" do
-    id = id |> KekkaiServer.Parsers.ID.parse!()
-    conn |> KekkaiProvider.hello(id)
-  end
+
+  # end
+
+  # # Twitter's CRC test endpoint
+  # post "/webhooks/:id/:crc_token" do
+  #   id = id |> KekkaiServer.Parsers.ID.parse!()
+
+  # end
 
   match "/" do
     send_resp(conn, 200, "hello world")
   end
+
+  match _, to: KekkaiServer.Endpoint.NotFound
 end
 
 defmodule KekkaiServer.Parsers.ID do
