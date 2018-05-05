@@ -30,6 +30,8 @@ defmodule KekkaiGateway.MixProject do
       {:plug, "~> 1.3"},
       {:jason, "~> 1.0"},
 
+      {:kekkai_core, in_umbrella: true},
+
       # Verify JSON
       {:simple_schema, git: "https://github.com/ndac-todoroki/simple_schema/", branch: "unique_exception"},
     ]
