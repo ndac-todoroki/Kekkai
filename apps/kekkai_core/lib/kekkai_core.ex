@@ -3,6 +3,9 @@ defmodule KekkaiCore do
   Documentation for KekkaiCore.
   """
 
+  # TODO: functions should not require `id`s.
+  # pass down only `conn`s, and parse it there.
+
   def create_server_instance(opts)do
     KekkaiCore.Server.start_child(opts)
   end
