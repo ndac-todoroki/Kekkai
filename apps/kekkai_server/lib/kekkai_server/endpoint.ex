@@ -25,17 +25,16 @@ defmodule KekkaiServer.Endpoint do
 
   forward "/apps", to: KekkaiServer.Endpoint.Apps
 
-  # post "/webhooks/:id" do
-  #   id = id |> KekkaiServer.Parsers.ID.parse!()
+  post "/webhooks/:id/:noise" do
+    id = id |> KekkaiServer.Parsers.ID.parse!()
 
+  end
 
-  # end
+  # Twitter's CRC test endpoint
+  post "/webhooks/:id/:noise/:crc_token" do
+    id = id |> KekkaiServer.Parsers.ID.parse!()
 
-  # # Twitter's CRC test endpoint
-  # post "/webhooks/:id/:crc_token" do
-  #   id = id |> KekkaiServer.Parsers.ID.parse!()
-
-  # end
+  end
 
   match "/" do
     send_resp(conn, 200, "hello world")
