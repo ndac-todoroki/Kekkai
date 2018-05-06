@@ -22,3 +22,22 @@ config :kekkai_gateway, KekkaiGateway.Endpoint,
 
 config :kekkai_web, KekkaiWeb.Endpoint,
   http: [port: 4040]
+
+
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
+# Set LoggerFileBackend as file output logger.
+config :logger,
+  backends: [{LoggerFileBackend, :logger_file_info},
+             {LoggerFileBackend, :logger_file_error}]
+###
+config :logger, :logger_file_info,
+  path: "log/#{Mix.env}/info.log",
+  level: :info
+###
+config :logger, :logger_file_error,
+  path: "log/#{Mix.env}/error.log",
+  level: :error

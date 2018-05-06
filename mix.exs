@@ -18,6 +18,7 @@ defmodule KekkaiDB.MixProject do
   defp deps do
     [
       {:distillery, "~> 1.0", warn_missing: false, runtime: false},
+      {:logger_file_backend, "~> 0.0.10"},
     ]
   end
 end
