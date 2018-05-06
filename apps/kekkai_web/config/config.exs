@@ -8,7 +8,8 @@ use Mix.Config
 # General application configuration
 config :kekkai_web,
   namespace: KekkaiWeb,
-  ecto_repos: [KekkaiDB.Repo]
+  ecto_repos: [KekkaiDB.Repo],
+  generators: [binary_id: true]
 
 # Configures the endpoint
 config :kekkai_web, KekkaiWeb.Endpoint,
@@ -27,6 +28,19 @@ config :kekkai_web, :generators,
   context_app: :kekkai_db
 
 config :phoenix, :json_library, Jason
+
+config :kekkai_web, MyApp.Guardian,
+       issuer: "kekkai_web",
+       secret_key: "IAiRDFLE9ng45znaLdaSeak+IHx9kZ+CBiKVK3zCWA+1UCV7T1I1T0y9fqUlo+8g"
+
+config :ueberauth, Ueberauth,
+  providers: [
+    twitter: {Ueberauth.Strategy.Twitter, []},
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
+  consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

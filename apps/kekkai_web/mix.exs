@@ -47,6 +47,11 @@ defmodule KekkaiWeb.Mixfile do
       {:kekkai_core, in_umbrella: true},
       {:cowboy, "~> 2.3"},
       {:jason, "~> 1.0"},
+
+      {:guardian, "~> 1.0"},
+      {:ueberauth, "~> 0.4"},
+      {:ueberauth_twitter, git: "https://github.com/ueberauth/ueberauth_twitter.git"},
+      {:oauth, github: "tim/erlang-oauth"},
     ]
   end
 
