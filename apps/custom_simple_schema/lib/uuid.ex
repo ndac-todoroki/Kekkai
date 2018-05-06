@@ -14,7 +14,7 @@ defmodule SimpleSchema.Type.UUID do
   def from_json(_schema, value, _opts) do
     case UUID.info(value) do
       {:ok, _info} -> {:ok, value}
-      :error -> {:error, :invalid_format}
+      {:error, info} -> {:error, info}
     end
   end
 
@@ -22,7 +22,7 @@ defmodule SimpleSchema.Type.UUID do
   def to_json(_schema, value, _opts) do
     case UUID.info(value) do
       {:ok, _info} -> {:ok, value}
-      :error -> {:error, :invalid_format}
+      {:error, info} -> {:error, info}
     end
   end
 end

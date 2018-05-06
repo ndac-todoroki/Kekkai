@@ -14,14 +14,7 @@ defmodule KekkaiCore.Server do
 
   def reply(conn, id) do
     process_name = KekkaiCore.Application.process_name(id)
-
-    with {:done, new_conn} <- KekkaiCore.Server.Instance.reply(process_name, conn) do
-      new_conn
-    else
-      any ->
-        any |> IO.inspect
-        :error
-    end
+    KekkaiCore.Server.Instance.reply(process_name, conn)
   end
 
   @impl DynamicSupervisor
