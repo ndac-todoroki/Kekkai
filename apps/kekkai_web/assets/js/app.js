@@ -24,6 +24,5 @@ import Elm from "./elm/main.js"
 
 const elmDiv = document.getElementById('elm-main');
 if (elmDiv) {
-    console.log("found");
     Elm.Main.embed(elmDiv);
 }
