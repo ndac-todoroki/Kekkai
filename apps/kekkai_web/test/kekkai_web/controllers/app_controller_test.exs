@@ -1,14 +1,14 @@
 defmodule KekkaiWeb.AppControllerTest do
   use KekkaiWeb.ConnCase
 
-  alias KekkaiDb.ControllPanel
+  alias KekkaiDb.ControlPanel
 
   @create_attrs %{app_id: 42, consumer_key: "some consumer_key", consumer_secret: "some consumer_secret"}
   @update_attrs %{app_id: 43, consumer_key: "some updated consumer_key", consumer_secret: "some updated consumer_secret"}
   @invalid_attrs %{app_id: nil, consumer_key: nil, consumer_secret: nil}
 
   def fixture(:app) do
-    {:ok, app} = ControllPanel.create_app(@create_attrs)
+    {:ok, app} = ControlPanel.create_app(@create_attrs)
     app
   end
 

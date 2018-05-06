@@ -1,14 +1,14 @@
 defmodule KekkaiWeb.UserControllerTest do
   use KekkaiWeb.ConnCase
 
-  alias KekkaiDb.ControllPanel
+  alias KekkaiDb.ControlPanel
 
   @create_attrs %{twitter_id: 42, twitter_name: "some twitter_name", twitter_screen_name: "some twitter_screen_name"}
   @update_attrs %{twitter_id: 43, twitter_name: "some updated twitter_name", twitter_screen_name: "some updated twitter_screen_name"}
   @invalid_attrs %{twitter_id: nil, twitter_name: nil, twitter_screen_name: nil}
 
   def fixture(:user) do
-    {:ok, user} = ControllPanel.create_user(@create_attrs)
+    {:ok, user} = ControlPanel.create_user(@create_attrs)
     user
   end
 
