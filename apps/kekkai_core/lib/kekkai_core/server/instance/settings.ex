@@ -10,6 +10,7 @@ defmodule KekkaiCore.Server.Instance.Settings do
   @struct_keys [
     instance_id: nil,
     process_name: nil,
+    stash_pid: nil,
     consumer_secret: "",
     noise: "",  # webhook urlの末尾につけて識別するやつ
     filters: [],

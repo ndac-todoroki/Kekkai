@@ -19,32 +19,39 @@ defmodule KekkaiCore.Server.Instance.Stash do
   end
 
   def get_state(pid) do
-    pid |> GenServer.call(:get_value)
+    pid |> GenServer.call(:get_state)
   end
 
   def update_state(pid, {key, _val} = pair) when key |> is_atom() do
     pid |> GenServer.cast({:update_state, pair})
   end
 
+  def put_state(pid, state), do: pid |> GenServer.cast(state)
+
 
   #### GenServer implementation
 
   @impl GenServer
-  def init(%Settings{} =args) do
-    {:ok, args}
+  def init(%Settings{} = args) do
+    {:ok, %{args | stash_pid: self()}}
   end
 
   @impl GenServer
-  def handle_call(:get_value, _from, %Settings{} =state) do
+  def handle_call(:get_state, _from, %Settings{} = state) do
     {:reply, state, state}
   end
 
   @impl GenServer
-  def handle_cast({:update_state, {key, val}}, %Settings{} =state) do
+  def handle_cast({:update_state, {key, val}}, %Settings{} = state) do
     if key in Settings.permitted_keys() do
       {:noreply, %{state | key => val}}
     else
       {:noreply, state}
     end
+  end
+
+  @impl GenServer
+  def handle_cast({:put_state, %Settings{} = state}, _old_state) do
+    {:noreply, state}
   end
 end

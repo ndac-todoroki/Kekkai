@@ -91,6 +91,11 @@ defmodule KekkaiCore.Server.Instance.Worker do
     {:noreply, state}
   end
 
+  @impl GenServer
+  def terminate(reason, %Settings{stash_pid: stash_pid} = state) do
+    Stash.put_state(stash_pid, state)
+  end
+
 
   #### private functions
 
