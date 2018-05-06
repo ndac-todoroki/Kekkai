@@ -3,55 +3,56 @@ defmodule KekkaiWeb.UserController do
 
   plug Ueberauth
 
-  alias KekkaiDb.ControlPanel
-  alias KekkaiDb.ControlPanel.User
-
-  def new(conn, _params) do
-    changeset = ControlPanel.change_user(%User{})
-    render(conn, "new.html", changeset: changeset)
+  def index(conn, params) do
+    conn |> send_resp(200, conn |> Map.from_struct() |> inspect(pretty: true))
   end
 
-  def create(conn, %{"user" => user_params}) do
-    case ControlPanel.create_user(user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-  end
+  # def new(conn, _params) do
+  #   changeset = ControlPanel.change_user(%User{})
+  #   render(conn, "new.html", changeset: changeset)
+  # end
 
-  def show(conn, %{"id" => id}) do
-    user = ControlPanel.get_user!(id)
-    render(conn, "show.html", user: user)
-  end
+  # def create(conn, %{"user" => user_params}) do
+  #   case ControlPanel.create_user(user_params) do
+  #     {:ok, user} ->
+  #       conn
+  #       |> put_flash(:info, "User created successfully.")
+  #       |> redirect(to: Routes.user_path(conn, :show, user))
+  #     {:error, %Ecto.Changeset{} = changeset} ->
+  #       render(conn, "new.html", changeset: changeset)
+  #   end
+  # end
 
-  def edit(conn, %{"id" => id}) do
-    user = ControlPanel.get_user!(id)
-    changeset = ControlPanel.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
-  end
+  # def show(conn, %{"id" => id}) do
+  #   user = ControlPanel.get_user!(id)
+  #   render(conn, "show.html", user: user)
+  # end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = ControlPanel.get_user!(id)
+  # def edit(conn, %{"id" => id}) do
+  #   user = ControlPanel.get_user!(id)
+  #   changeset = ControlPanel.change_user(user)
+  #   render(conn, "edit.html", user: user, changeset: changeset)
+  # end
 
-    case ControlPanel.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
-    end
-  end
+  # def update(conn, %{"id" => id, "user" => user_params}) do
+  #   user = ControlPanel.get_user!(id)
 
-  def delete(conn, %{"id" => id}) do
-    user = ControlPanel.get_user!(id)
-    {:ok, _user} = ControlPanel.delete_user(user)
+  #   case ControlPanel.update_user(user, user_params) do
+  #     {:ok, user} ->
+  #       conn
+  #       |> put_flash(:info, "User updated successfully.")
+  #       |> redirect(to: Routes.user_path(conn, :show, user))
+  #     {:error, %Ecto.Changeset{} = changeset} ->
+  #       render(conn, "edit.html", user: user, changeset: changeset)
+  #   end
+  # end
 
-    conn
-    |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: Routes.user_path(conn, :index))
-  end
+  # def delete(conn, %{"id" => id}) do
+  #   user = ControlPanel.get_user!(id)
+  #   {:ok, _user} = ControlPanel.delete_user(user)
+
+  #   conn
+  #   |> put_flash(:info, "User deleted successfully.")
+  #   |> redirect(to: Routes.user_path(conn, :index))
+  # end
 end
