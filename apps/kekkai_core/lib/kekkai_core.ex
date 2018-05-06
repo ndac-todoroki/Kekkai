@@ -6,17 +6,17 @@ defmodule KekkaiCore do
   # TODO: functions should not require `id`s.
   # pass down only `conn`s, and parse it there.
 
-  def create_server_instance(opts)do
-    KekkaiCore.Server.start_child(opts)
+  def create_server_instance(%Plug.Conn{} = conn)do
+    KekkaiCore.Server.start_child(conn)
   end
 
-  def hello(conn, id) when id |> is_integer() do
-    conn |> KekkaiCore.Server.reply(id)
+  def hello(%Plug.Conn{} = conn) do
+    conn |> KekkaiCore.Server.reply()
   end
 
-  def crc_test(conn, id) do
-    conn |> KekkaiCore.Server.crc_test(id)
+  def crc_test(%Plug.Conn{} = conn) do
+    conn |> KekkaiCore.Server.crc_test()
   end
 
-  def instance_info(conn, id), do: conn |> KekkaiCore.Server.instance_info(id)
+  def instance_info(%Plug.Conn{} = conn), do: conn |> KekkaiCore.Server.instance_info()
 end

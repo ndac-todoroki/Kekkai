@@ -3,8 +3,6 @@ defmodule KekkaiGateway.Endpoint.Apps do
   use Plug.ErrorHandler
   require Logger
 
-  alias __MODULE__
-
   plug Plug.Parsers,
           parsers: [:urlencoded, :json],
           pass:  ["text/*"],
@@ -13,14 +11,12 @@ defmodule KekkaiGateway.Endpoint.Apps do
   plug :dispatch
 
   post "/" do
-    params = conn.body_params |> Apps.CreateParser.parse!()
-
     with \
-      {:ok, _pid} <- KekkaiCore.create_server_instance(params)
+      {:ok, _pid} <- conn |> KekkaiCore.create_server_instance()
     do
       conn
       |> put_status(201)
-      |> KekkaiCore.instance_info(params.id)
+      |> KekkaiCore.instance_info()
     else
       {:error, :max_children} ->
         send_resp(conn, 500, "No more instances could be created. Please report this to us. Thanks.")
@@ -30,10 +26,9 @@ defmodule KekkaiGateway.Endpoint.Apps do
   end
 
   get "/:id" do
-    id = id |> KekkaiGateway.Parsers.ID.parse!()
     conn
     |> put_status(200)
-    |> KekkaiCore.instance_info(id)
+    |> KekkaiCore.instance_info()
   end
 
   match _, to: KekkaiGateway.Endpoint.NotFound

@@ -45,6 +45,7 @@ defmodule KekkaiCore.Server.Instance.API do
   defp verify_process!({:via, Registry, {module, name}}) do
     case Registry.lookup(module, name) do
       [] ->
+        # FIXME: change this or raise custom exception so we can return better info
         raise "There's no process currently associated with the given name!"
       [{pid, _}] ->
         verify_process!(pid)

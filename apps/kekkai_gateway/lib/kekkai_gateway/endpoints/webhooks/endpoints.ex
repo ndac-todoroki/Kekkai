@@ -13,14 +13,12 @@ defmodule KekkaiGateway.Endpoint.Webhooks do
   plug :dispatch
 
   post "/:id/:noise" do
-    id = id |> KekkaiGateway.Parsers.ID.parse!()
 
   end
 
   # Twitter's CRC test endpoint
   get "/:id/:noise" do
-    id = id |> KekkaiGateway.Parsers.ID.parse!()
-    KekkaiCore.crc_test(conn, id)
+    KekkaiCore.crc_test(conn)
   end
 
   match _, to: KekkaiGateway.Endpoint.NotFound

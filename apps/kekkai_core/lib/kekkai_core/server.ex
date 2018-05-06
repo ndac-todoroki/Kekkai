@@ -6,15 +6,30 @@ defmodule KekkaiCore.Server do
   Names of the server instances are taken from `KekkaiCore.Registry` using `:via` tuples.
   """
 
+  defmodule Parser do
+    defmodule ID do
+      import SimpleSchema, only: [defschema: 2]
+
+      defschema [
+        id: SimpleSchema.Type.IntegerString,
+      ], tolerant: true
+    end
+
+    defmodule ChildOpts do
+      import SimpleSchema, only: [defschema: 2]
+
+      defschema [
+        id: SimpleSchema.Type.IntegerString,
+        consumer_secret: :string,
+      ], tolerant: true
+    end
+  end
+
+
   use DynamicSupervisor#, restart: :temporary  # children wouldn't be restarted automatically
 
   def start_link(arg) do
     DynamicSupervisor.start_link(__MODULE__, arg, name: __MODULE__)
-  end
-
-  def reply(conn, id) do
-    process_name = KekkaiCore.Application.process_name(id)
-    KekkaiCore.Server.Instance.reply(process_name, conn)
   end
 
   @impl DynamicSupervisor
@@ -25,31 +40,73 @@ defmodule KekkaiCore.Server do
     )
   end
 
-  def start_child(%{id: id} = opts) do
-    process_name = KekkaiCore.Application.process_name(id)
-    spec = {KekkaiCore.Server.Instance, process_name: process_name, opts: opts}
+  def start_child(conn) do
+    with {:ok, opts} <- SimpleSchema.from_json(Parser.ChildOpts, conn.params) do
+      process_name = KekkaiCore.Application.process_name(opts.id)
+      spec = {
+        KekkaiCore.Server.Instance,
+        process_name: process_name,
+        opts: opts |> Map.from_struct()
+      }
 
-    case DynamicSupervisor.start_child(__MODULE__, spec) do
-      {:ok, pid} ->
-        {:ok, pid}
-      {:ok, pid, _info} ->
-        {:ok, pid}
-      {:error, reason}  when reason in [:max_children, :dynamic] ->
-        {:error, :max_children}
-      others ->
-        others
+      case DynamicSupervisor.start_child(__MODULE__, spec) do
+        {:ok, pid} ->
+          {:ok, pid}
+        {:ok, pid, _info} ->
+          {:ok, pid}
+        {:error, reason}  when reason in [:max_children, :dynamic] ->
+          {:error, :max_children}
+        others ->
+          others
+      end
+    else
+      {:error, reasons} ->
+        conn
+        |> SimpleSchema.Utilities.ErrorsToPlug.set_body(reasons)
+        |> Plug.Conn.put_status(422)
+        |> Plug.Conn.send_resp()
     end
   end
 
-  def crc_test(conn, id) do
-    id
-    |> KekkaiCore.Application.process_name()
-    |> KekkaiCore.Server.Instance.API.crc_test(conn)
+  def reply(conn) do
+    with {:ok, %{id: id}} <- SimpleSchema.from_json(Parser.ID, conn.params) do
+      id
+      |> KekkaiCore.Application.process_name()
+      |> KekkaiCore.Server.Instance.reply(conn)
+    else
+      {:error, reasons} ->
+        conn
+        |> SimpleSchema.Utilities.ErrorsToPlug.set_body(reasons)
+        |> Plug.Conn.put_status(422)
+        |> Plug.Conn.send_resp()
+    end
   end
 
-  def instance_info(conn, id) do
-    id
-    |> KekkaiCore.Application.process_name()
-    |> KekkaiCore.Server.Instance.API.instance_info(conn)
+  def crc_test(conn) do
+    with {:ok, %{id: id}} <- SimpleSchema.from_json(Parser.ID, conn.params) do
+      id
+      |> KekkaiCore.Application.process_name()
+      |> KekkaiCore.Server.Instance.API.crc_test(conn)
+    else
+      {:error, reasons} ->
+        conn
+        |> SimpleSchema.Utilities.ErrorsToPlug.set_body(reasons)
+        |> Plug.Conn.put_status(422)
+        |> Plug.Conn.send_resp()
+    end
+  end
+
+  def instance_info(conn) do
+    with {:ok, %{id: id}} <- SimpleSchema.from_json(Parser.ID, conn.params) do
+      id
+      |> KekkaiCore.Application.process_name()
+      |> KekkaiCore.Server.Instance.API.instance_info(conn)
+    else
+      {:error, reasons} ->
+        conn
+        |> SimpleSchema.Utilities.ErrorsToPlug.set_body(reasons)
+        |> Plug.Conn.put_status(422)
+        |> Plug.Conn.send_resp()
+    end
   end
 end
