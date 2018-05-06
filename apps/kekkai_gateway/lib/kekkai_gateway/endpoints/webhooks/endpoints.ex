@@ -3,6 +3,8 @@ defmodule KekkaiGateway.Endpoint.Webhooks do
   use Plug.ErrorHandler
   require Logger
 
+  plug Plug.FilterByIP, ~w(127.0.0.1 199.59.148.0/22 199.16.156.0/22)
+
   plug Plug.Parsers,
           parsers: [:urlencoded, :json],
           pass:  ["text/*"],

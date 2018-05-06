@@ -4,6 +4,10 @@ defmodule KekkaiGateway.Endpoint do
   """
 
   use Plug.Router
+
+  # Get the original IP
+  plug RemoteIp
+
   use Plug.ErrorHandler
   require Logger
 

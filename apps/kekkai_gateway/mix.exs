@@ -29,6 +29,8 @@ defmodule KekkaiGateway.MixProject do
       {:cowboy, "~> 2.3"},
       {:plug, "~> 1.3"},
       {:jason, "~> 1.0"},
+      {:remote_ip, "~> 0.1"},
+      {:inet_cidr, "~> 1.0.0"},
 
       {:kekkai_core, in_umbrella: true},
 
