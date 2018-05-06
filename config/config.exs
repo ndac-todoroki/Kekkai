@@ -15,3 +15,10 @@ import_config "../apps/*/config/config.exs"
 #       level: :info,
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
+
+# Configures the endpoints
+config :kekkai_gateway, KekkaiGateway.Endpoint,
+  http: [port: 4000]
+
+config :kekkai_web, KekkaiWeb.Endpoint,
+  http: [port: 4040]

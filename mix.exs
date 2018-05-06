@@ -1,4 +1,4 @@
-defmodule Kekkai.MixProject do
+defmodule KekkaiDB.MixProject do
   use Mix.Project
 
   def project do

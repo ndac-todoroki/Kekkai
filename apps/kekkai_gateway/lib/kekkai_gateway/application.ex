@@ -10,12 +10,16 @@ defmodule KekkaiGateway.Application do
     children = [
       # Starts a worker by calling: KekkaiGateway.Worker.start_link(arg)
       # {KekkaiGateway.Worker, arg},
-      {Plug.Adapters.Cowboy2, scheme: :http, plug: {KekkaiGateway.Endpoint, port: 4000}, options: [port: 4000]},
+      {Plug.Adapters.Cowboy2, scheme: :http, plug: {KekkaiGateway.Endpoint, cowboy_options()}, options: cowboy_options()},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: KekkaiGateway.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp cowboy_options do
+     Application.fetch_env!(:kekkai_gateway, KekkaiGateway.Endpoint)[:http]
   end
 end
