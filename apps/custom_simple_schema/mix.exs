@@ -27,6 +27,8 @@ defmodule CustomSimpleSchema.MixProject do
     [
       {:simple_schema, git: "https://github.com/ndac-todoroki/simple_schema/", branch: "unique_exception"},
       {:uuid, "~> 1.1"},
+      {:plug, "~> 1.3"},
+      {:jason, "~> 1.0"},
     ]
   end
 end
