@@ -1,0 +1,23 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :twitter_screen_name %>
+  <%= text_input f, :twitter_screen_name %>
+  <%= error_tag f, :twitter_screen_name %>
+
+  <%= label f, :twitter_id %>
+  <%= number_input f, :twitter_id %>
+  <%= error_tag f, :twitter_id %>
+
+  <%= label f, :twitter_name %>
+  <%= text_input f, :twitter_name %>
+  <%= error_tag f, :twitter_name %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

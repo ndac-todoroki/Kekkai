@@ -1,0 +1,30 @@
+<h2>Listing App</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Consumer key</th>
+      <th>Consumer secret</th>
+      <th>App</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for app <- @app do %>
+    <tr>
+      <td><%= app.consumer_key %></td>
+      <td><%= app.consumer_secret %></td>
+      <td><%= app.app_id %></td>
+
+      <td>
+        <%= link "Show", to: Routes.app_path(@conn, :show, app) %>
+        <%= link "Edit", to: Routes.app_path(@conn, :edit, app) %>
+        <%= link "Delete", to: Routes.app_path(@conn, :delete, app), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New App", to: Routes.app_path(@conn, :new) %></span>

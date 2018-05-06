@@ -1,0 +1,23 @@
+<h2>Show App</h2>
+
+<ul>
+
+  <li>
+    <strong>Consumer key:</strong>
+    <%= @app.consumer_key %>
+  </li>
+
+  <li>
+    <strong>Consumer secret:</strong>
+    <%= @app.consumer_secret %>
+  </li>
+
+  <li>
+    <strong>App:</strong>
+    <%= @app.app_id %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.app_path(@conn, :edit, @app) %></span>
+<span><%= link "Back", to: Routes.app_path(@conn, :index) %></span>
