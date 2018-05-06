@@ -4,6 +4,7 @@ defmodule KekkaiDB.MixProject do
   def project do
     [
       apps_path: "apps",
+      default_task: "phx.server",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
