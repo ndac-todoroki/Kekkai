@@ -13,7 +13,10 @@ defmodule KekkaiGateway.Endpoint.Webhooks do
   plug :dispatch
 
   post "/:id/:noise" do
-
+    Logger.info conn |> inspect(pretty: true)
+    conn
+    |> resp(200, %{} |> Jason.encode!)
+    |> halt()
   end
 
   # Twitter's CRC test endpoint

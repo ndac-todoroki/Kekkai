@@ -31,8 +31,9 @@ end
 # will be used by default
 
 release :kekkai do
-  set version: "0.3.0"
+  set version: "0.3.1"
   set applications: [
+    logger_file_backend: :permanent,
     kekkai_core: :permanent,
     kekkai_gateway: :permanent
   ]
