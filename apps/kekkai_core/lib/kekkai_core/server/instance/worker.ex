@@ -5,6 +5,7 @@ defmodule KekkaiCore.Server.Instance.Worker do
   alias KekkaiCore.Server.Instance.Worker.{CrcTestParser}
 
   import Plug.Conn
+  require Logger
 
   def start_link(stash_pid) do
     with \
@@ -53,7 +54,7 @@ defmodule KekkaiCore.Server.Instance.Worker do
       |> Base.encode64(padding: true)
 
     json =
-      %{response_token: "sha256:" <> response_token}
+      %{response_token: "sha256=" <> response_token}
       |> Jason.encode!()
 
     new_conn =
