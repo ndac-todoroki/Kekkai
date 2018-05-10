@@ -31,8 +31,11 @@ config :logger, :console,
 
 # Set LoggerFileBackend as file output logger.
 config :logger,
-  backends: [{LoggerFileBackend, :logger_file_info},
-             {LoggerFileBackend, :logger_file_error}]
+  backends: [
+    :console,
+    {LoggerFileBackend, :logger_file_info},
+    {LoggerFileBackend, :logger_file_error},
+  ]
 ###
 config :logger, :logger_file_info,
   path: "log/#{Mix.env}/info.log",
