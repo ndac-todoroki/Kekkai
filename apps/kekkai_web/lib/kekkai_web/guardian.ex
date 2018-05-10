@@ -1,4 +1,4 @@
-defmodule MyApp.Guardian do
+defmodule KekkaiWeb.Guardian do
   use Guardian, otp_app: :kekkai_web
 
   def subject_for_token(resource, _claims) do
