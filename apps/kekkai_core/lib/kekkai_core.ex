@@ -6,8 +6,9 @@ defmodule KekkaiCore do
   # TODO: functions should not require `id`s.
   # pass down only `conn`s, and parse it there.
 
-  def create_server_instance(%Plug.Conn{} = conn)do
-    KekkaiCore.Server.start_child(conn)
+  @spec create_server_instance(%{atom => any}) :: {:ok, pid} | {:error, any}
+  def create_server_instance(%{} = opts)do
+    KekkaiCore.Server.start_child(opts)
   end
 
   def hello(%Plug.Conn{} = conn) do

@@ -10,9 +10,21 @@ defmodule KekkaiGateway.Endpoint.Apps do
   plug :match
   plug :dispatch
 
+  defmodule Parser do
+    defmodule ChildOpts do
+      import SimpleSchema, only: [defschema: 2]
+
+      defschema [
+        id: SimpleSchema.Type.IntegerString,
+        consumer_secret: :string,
+      ], tolerant: true
+    end
+  end
+
   post "/" do
     with \
-      {:ok, _pid} <- conn |> KekkaiCore.create_server_instance()
+      {:ok, opts} <- SimpleSchema.from_json(Parser.ChildOpts, conn.params),
+      {:ok, _pid} <- opts |> KekkaiCore.create_server_instance()
     do
       conn
       |> put_status(201)
@@ -22,6 +34,14 @@ defmodule KekkaiGateway.Endpoint.Apps do
         send_resp(conn, 500, "No more instances could be created. Please report this to us. Thanks.")
       {:error, {:already_started, _pid}} ->
         send_resp(conn, 409, "The instance with that name is already UP! Make sure your request is correct.")
+      {:error, reasons} when reasons |> is_list ->
+        conn
+        |> SimpleSchema.Utilities.ErrorsToPlug.set_body(reasons)
+        |> Plug.Conn.put_status(422)
+        |> Plug.Conn.send_resp()
+        |> Plug.Conn.halt()
+      {:error, _} ->
+        raise "Unexpected error" # triggers text return
     end
   end
 
