@@ -1,5 +1,8 @@
 # Kekkai
 
+**Kekkai IS SUSPENDED.**  
+People from Twitter said they will support timeline data in AAAPI (at the forums), but they turned out not to. We are dead.
+
 ## What is _Kekkai_?
 
 Kekkai is a service which converts the Account Activity API into streams.  
